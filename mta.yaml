@@ -1,0 +1,95 @@
+ID: constancia
+_schema-version: 3.2.0
+version: 0.0.1
+parameters:
+  enable-parallel-deployments: true
+modules:
+  - name: constancia
+    type: nodejs
+    path: approuter
+    parameters:
+      disk-quota: 512M
+      memory: 512M
+    requires:
+      - name: constancia_destination
+      - name: constancia_html5_repo_runtime
+      - name: constancia_uaa
+  - name: webapp_deployer
+    type: com.sap.application.content
+    path: deployer
+    requires:
+      - name: constancia_html5_repo_host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - name: uimodule
+          artifacts:
+            - dist/uimodule.zip
+          target-path: resources/
+  - name: uimodule
+    type: html5
+    path: uimodule
+    build-parameters:
+      builder: custom
+      commands:
+        - npm run build:uimodule --prefix ..
+      supported-platforms: []
+  - name: constancia_destination_content
+    type: com.sap.application.content
+    build-parameters:
+      no-source: true
+    requires:
+      - name: constancia_uaa
+        parameters:
+          service-key:
+            name: constancia_uaa_key
+      - name: constancia_html5_repo_host
+        parameters:
+          service-key:
+            name: constancia_html5_repo_host_key
+      - name: constancia_destination
+        parameters:
+          content-target: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: constancia_destination_html5
+              ServiceInstanceName: constancia_html5_repo_host
+              ServiceKeyName: constancia_html5_repo_host_key
+              sap.cloud.service: constancia.service
+            - Name: constancia_destination_uaa
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: constancia_uaa
+              ServiceKeyName: constancia_uaa_key
+              sap.cloud.service: constancia.service
+resources:
+  - name: constancia_destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: lite
+      service: destination
+      config:
+        HTML5Runtime_enabled: true
+        version: 1.0.0
+  - name: constancia_html5_repo_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+      config:
+        sizeLimit: 2
+  - name: constancia_html5_repo_runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+  - name: constancia_uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service: xsuaa

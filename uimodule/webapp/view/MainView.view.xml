@@ -1,0 +1,36 @@
+<mvc:View controllerName="legacy.constancia.controller.MainView" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+  
+  <Shell>
+  <App>
+  <pages>
+  <Page id="panel"  title="{i18n>title}"  >	
+  <content>
+      <FlexBox alignItems="Center"
+				justifyContent="Center">
+            <SearchField  class="search" width="300px" maxLength="11" id="cuit" search="onSearch2" placeholder="Ingrese CUIT" />
+          </FlexBox>
+        <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <l:content>
+                <List id="list" binding="{data}" width="auto" class="sapUiResponsiveMargin" headerText="Contribuyente - {data>/0/Contribuyente}">
+                    <StandardListItem title="Razon Social" description="{data>/0/RazonSocial}" />
+                    <StandardListItem title="Localidad" description="{data>/0/CodPostal} {data>/0/Localidad}" />
+                    <StandardListItem title="Pais" description="{data>/0/Provincia}" />
+                    <StandardListItem title="Tipo Persona" description="{data>/0/TipoPersona}" />
+                    <StandardListItem title="Tipo Ident Fiscal" description="{data>/0/TipoIdentFiscal}" />
+                    <StandardListItem title="Clase Imp" description="{data>/0/ClaseImp}" />
+                    <StandardListItem title="Codigo Provincia" description="{data>/0/CodProvincia}" />                 
+                </List>
+            </l:content>
+        </l:VerticalLayout>          
+          <FlexBox alignItems="Center"
+				justifyContent="Center">
+        <Text text="Powered by"></Text>
+               <Image src="https://gqtesting.s3.amazonaws.com/logo.png"  width="100px"/>   
+          </FlexBox>  
+          </content>                            
+    </Page>
+    </pages>
+    </App>
+    </Shell>
+</mvc:View>
+
