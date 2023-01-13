@@ -14,7 +14,7 @@
                 <List id="list" binding="{data}" width="auto" class="sapUiResponsiveMargin" headerText="Contribuyente - {data>/0/Contribuyente}">
                     <StandardListItem title="Razon Social" description="{data>/0/RazonSocial}" />
                     <StandardListItem title="Localidad" description="{data>/0/CodPostal} {data>/0/Localidad}" />
-                    <StandardListItem title="Pais" description="{data>/0/Provincia}" />
+                    <StandardListItem title="Provincia" description="{data>/0/Provincia}" />
                     <StandardListItem title="Tipo Persona" description="{data>/0/TipoPersona}" />
                     <StandardListItem title="Tipo Ident Fiscal" description="{data>/0/TipoIdentFiscal}" />
                     <StandardListItem title="Clase Imp" description="{data>/0/ClaseImp}" />
