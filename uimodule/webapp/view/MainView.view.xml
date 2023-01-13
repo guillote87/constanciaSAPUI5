@@ -7,7 +7,7 @@
   <content>
       <FlexBox alignItems="Center"
 				justifyContent="Center">
-            <SearchField  class="search" width="300px" maxLength="11" id="cuit" search="onSearch2" placeholder="Ingrese CUIT" />
+            <SearchField  class="search" width="300px" maxLength="11" id="cuit" search="onSearch" placeholder="Ingrese CUIT" />
           </FlexBox>
         <l:VerticalLayout class="sapUiContentPadding" width="100%">
             <l:content>
